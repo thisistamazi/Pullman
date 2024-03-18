@@ -1,0 +1,242 @@
+@use '__variables.scss' as v;
+
+$ff-body: 'Jost', sans-serif;
+
+@mixin flexer($justify, $align, $direct, $g) {
+    display: flex;
+    flex-direction: $direct;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $g;
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body{
+    font-family: $ff-body;
+    font-size: 1.6rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+// Header
+
+li{
+    list-style: none;
+}
+
+header{
+    position: absolute;
+    top: 0;
+    width: 100dvw;
+}
+
+.nav-header{
+    padding: 4rem 2rem;
+    &__list{
+        @include flexer(center, start, row, 4rem);
+        padding: 0;
+    }
+    &__logo{
+        max-width: 17rem;
+    }
+    &__img{
+        padding: 0 1rem;
+    }
+}
+
+.sidebar{
+    display: none;
+}
+
+.underline{
+    position: relative;
+    opacity: 0.8;
+    transition: 0.25s;
+    &:hover{
+        opacity: 1;
+    }&::after{
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1);
+    height: 0.1rem;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.25s ease-out;
+    }
+    &:hover::after{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+}
+
+.hero-section{
+    @include flexer(center, center, column, 4rem);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    height: 100dvh;
+    width: 100dvw;
+    background: rgba(0, 0, 0, 0.4);
+    &__video-bg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
+    &__middle{
+        @include flexer(center, center, column, 2rem);
+        position: absolute;
+        bottom: 40%;
+    h1{
+        font-size: 3rem;
+    }
+    .hero-section__book{
+        width: 25rem;
+        border: 1px solid white;
+        padding: 1rem 3rem;
+        font-weight: 500;
+        transition: 0.2s;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.8);
+            color: rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+        }
+        &:active{
+            transform: scale(0.85);
+        }
+    }
+    }
+}
+
+// ARROW
+
+$base: 0.6rem;
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20dvh;
+    position: absolute;
+    top: 80%;
+    left: 0;
+
+    
+}
+
+.chevron {
+    position: absolute;
+    width: $base * 3.5;
+    height: $base * 0.8;
+    opacity: 0;
+    transform: scale(0.3);
+    animation: move-chevron 3s ease-out infinite;
+}
+
+.chevron:first-child {
+    animation: move-chevron 3s ease-out 1s infinite;
+}
+
+.chevron:nth-child(2) {
+    animation: move-chevron 3s ease-out 2s infinite;
+}
+
+.chevron:before,
+.chevron:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background: white;
+}
+
+.chevron:before {
+    left: 0;
+    transform: skewY(30deg);
+}
+
+.chevron:after {
+    right: 0;
+    width: 50%;
+    transform: skewY(-30deg);
+}
+
+@keyframes move-chevron {
+    25% {
+        opacity: 1;
+    }
+
+    33.3% {
+        opacity: 1;
+        transform: translateY($base * 3.8);
+    }
+
+    66.6% {
+        opacity: 1;
+        transform: translateY($base * 5.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY($base * 8) scale(0.5);
+    }
+}
+
+
+@media screen and (max-width: 1080px) {
+    .sidebar{
+        display: block;
+        
+        &__nav{
+            font-size: 3rem;
+        }
+        .offcanvas{
+            background: rgba(0, 0, 0, 1) !important;
+            padding: 6rem 4rem;
+        }
+        &__links{
+            @include flexer(start, center, row, 3rem);
+            padding-left: 1.2rem;
+            svg{
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    }
+
+    .nav-header{
+        display: none;
+    }
+    .navbar-brand{
+        margin: 3rem auto;
+        padding-left: 4rem;
+    }
+    .navbar-toggler{
+        margin: 0 1rem 2.5rem 0;
+    }
+    
+}
+
+
